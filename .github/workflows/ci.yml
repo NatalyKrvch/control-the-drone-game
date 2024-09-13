@@ -50,6 +50,9 @@ jobs:
       - name: Build project
         run: yarn build
 
+      - name: List files in dist folder
+        run: ls -R ./dist
+
       - name: Upload production-ready files
         uses: actions/upload-artifact@v3
         with:
@@ -69,6 +72,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist-files
+
+      - name: List files in dist folder (before deploy)
+        run: ls -R ./dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
