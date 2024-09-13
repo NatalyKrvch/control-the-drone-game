@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   lint:
     name: Lint codebase
@@ -47,6 +50,12 @@ jobs:
       - name: Build project
         run: yarn build
 
+      - name: Upload production-ready files
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: ./dist
+
   deploy:
     name: Deploy to GitHub Pages
     needs: build
@@ -56,16 +65,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Download built files
+        uses: actions/download-artifact@v3
         with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Build project
-        run: yarn build
+          name: dist-files
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
