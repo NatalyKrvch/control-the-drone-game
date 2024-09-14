@@ -44,4 +44,5 @@ dist-ssr/
 # Dependency lockfiles
 .pnpm-debug.log*
 .pnp.*
+.env
 
