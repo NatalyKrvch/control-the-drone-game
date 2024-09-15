@@ -1,67 +1,54 @@
-import useGameInit from '@hooks/useGameInit';
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode } from 'react';
+import { initGame, getTokenChunk } from '../services/api';
 
 interface GameContextProps {
   playerId: string | null;
   token: string | null;
+  initializeGame: (name: string, complexity: number) => Promise<void>;
   caveData: Array<[number, number]>;
   setCaveData: React.Dispatch<React.SetStateAction<Array<[number, number]>>>;
-  initializeGame: (name: string, complexity: number) => Promise<void>;
+  playerName: string;
+  playerComplexity: number;
 }
 
 const GameContext = createContext<GameContextProps | undefined>(undefined);
 
-interface GameProviderProps {
-  children: ReactNode;
-}
-
-export const GameProvider = ({ children }: GameProviderProps) => {
-  const { playerId, token, initializeGame } = useGameInit();
+export const GameProvider = ({ children }: { children: ReactNode }) => {
+  const [playerId, setPlayerId] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [caveData, setCaveData] = useState<Array<[number, number]>>([]);
-  const baseWsUrl = import.meta.env.VITE_API_BASE_WS_URL;
+  const [playerName, setPlayerName] = useState<string>('');
+  const [playerComplexity, setPlayerComplexity] = useState<number>(5);
 
-  useEffect(() => {
-    if (!playerId || !token) return;
+  const initializeGame = async (name: string, complexity: number) => {
+    try {
+      setPlayerName(name);
+      setPlayerComplexity(complexity);
+      const id = await initGame(name, complexity);
+      setPlayerId(id);
 
-    const ws = new WebSocket(baseWsUrl);
+      const tokenChunks = await Promise.all(
+        Array.from({ length: 4 }, (_, i) => getTokenChunk(id, i + 1)),
+      );
 
-    ws.onopen = () => {
-      console.log('WebSocket connection opened.');
-      ws.send(`player:${playerId}-${token}`);
-    };
-
-    ws.onmessage = (event) => {
-      const message = event.data;
-
-      if (message === 'finished') {
-        ws.close();
-      } else {
-        const [leftWall, rightWall] = message.split(',').map(Number);
-        setCaveData((prevData) => [...prevData, [leftWall, rightWall]]);
-      }
-    };
-
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    ws.onclose = () => {
-      console.log('WebSocket connection closed.');
-    };
-
-    return () => {
-      ws.close();
-    };
-  }, [playerId, token]);
+      const fullToken = tokenChunks.join('');
+      setToken(fullToken);
+    } catch (error) {
+      console.error('Failed to initialize game:', error);
+      throw error;
+    }
+  };
 
   return (
     <GameContext.Provider
       value={{
         playerId,
         token,
+        initializeGame,
         caveData,
         setCaveData,
-        initializeGame,
+        playerName,
+        playerComplexity,
       }}
     >
       {children}

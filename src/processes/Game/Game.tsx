@@ -6,7 +6,7 @@ const Game = () => {
     <div>
       <h1>Drone Game</h1>
       <Form />
-      <Cave />
+      {/* <Cave /> */}
     </div>
   );
 };

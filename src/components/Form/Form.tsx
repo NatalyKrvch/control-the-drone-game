@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 const Form = () => {
   const [name, setName] = useState('');
-  const [complexity, setComplexity] = useState(1);
+  const [complexity, setComplexity] = useState(0);
   const { initializeGame } = useGameContext();
 
   const handleStartGame = async () => {
