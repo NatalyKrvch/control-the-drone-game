@@ -10,9 +10,14 @@ import {
 interface GameOverModalProps {
   gameStatus: 'won' | 'lost';
   onRestart: () => void;
+  score: number;
 }
 
-const GameOverModal = ({ gameStatus, onRestart }: GameOverModalProps) => {
+const GameOverModal = ({
+  gameStatus,
+  onRestart,
+  score,
+}: GameOverModalProps) => {
   let message = '';
 
   if (gameStatus === 'won') {
@@ -26,6 +31,7 @@ const GameOverModal = ({ gameStatus, onRestart }: GameOverModalProps) => {
       <DialogTitle>Game Over</DialogTitle>
       <DialogContent>
         <Typography variant="h6">{message}</Typography>
+        <Typography variant="h6">Your Score: {score}</Typography>
       </DialogContent>
       <DialogActions>
         <Button onClick={onRestart} color="primary" variant="contained">

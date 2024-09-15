@@ -13,9 +13,7 @@ const Game = () => {
   const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>(
     'playing',
   );
-  const [collisionType, setCollisionType] = useState<
-    'nose' | 'back' | 'side' | null
-  >(null);
+  const [score, setScore] = useState(0);
 
   const { dronePosition, horizontalSpeed, verticalSpeed } = useDroneControls(
     250,
@@ -32,12 +30,14 @@ const Game = () => {
   return (
     <div>
       <h1>Drone Game</h1>
+      <h2>Score: {score}</h2>
       <Cave
         dronePosition={dronePosition}
         verticalSpeed={verticalSpeed}
         setGameStatus={setGameStatus}
         gameStatus={gameStatus}
-        setCollisionType={setCollisionType}
+        setScore={setScore}
+        score={score}
       />
       <SpeedGauges
         horizontalSpeed={horizontalSpeed}
@@ -49,6 +49,7 @@ const Game = () => {
           onRestart={() => {
             navigate('/');
           }}
+          score={score}
         />
       )}
     </div>

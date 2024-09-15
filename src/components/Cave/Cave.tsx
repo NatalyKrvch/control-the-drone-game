@@ -1,10 +1,11 @@
-import { useGameContext } from '@contextsGameContext';
 import { useCaveAnimation } from '@hooks/useCaveAnimation';
 import { useCaveWebSocket } from '@hooks/useCaveWebSocket';
 import { useCollisionDetection } from '@hooks/useCollisionDetection';
 import React, { useRef } from 'react';
 import { createCavePath } from './helpers/createCavePath';
 import Drone from '@components/Drone/Drone';
+import { useUpdateScore } from '@hooks/useUpdateScore';
+import { useGameContext } from '@contextsGameContext';
 
 interface CaveProps {
   dronePosition: number;
@@ -13,9 +14,8 @@ interface CaveProps {
     React.SetStateAction<'playing' | 'won' | 'lost'>
   >;
   gameStatus: 'playing' | 'won' | 'lost';
-  setCollisionType: React.Dispatch<
-    React.SetStateAction<'nose' | 'back' | 'side' | null>
-  >;
+  setScore: React.Dispatch<React.SetStateAction<number>>;
+  score: number;
 }
 
 const Cave = ({
@@ -23,8 +23,9 @@ const Cave = ({
   verticalSpeed,
   setGameStatus,
   gameStatus,
+  setScore,
 }: CaveProps) => {
-  const { playerId, token, caveData } = useGameContext();
+  const { playerId, token, caveData, playerComplexity } = useGameContext();
   const caveOffset = useCaveAnimation(verticalSpeed, gameStatus);
   const caveRef = useRef<SVGSVGElement | null>(null);
   const serverFinished = useCaveWebSocket(playerId, token);
@@ -35,6 +36,13 @@ const Cave = ({
     gameStatus,
     setGameStatus,
     serverFinished,
+  });
+
+  useUpdateScore({
+    caveOffset,
+    verticalSpeed,
+    setScore,
+    playerComplexity,
   });
 
   return (

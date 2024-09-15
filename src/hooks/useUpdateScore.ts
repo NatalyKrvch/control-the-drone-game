@@ -1,0 +1,30 @@
+import { useEffect, useRef } from 'react';
+
+interface UseUpdateScoreParams {
+  caveOffset: number;
+  verticalSpeed: number;
+  setScore: React.Dispatch<React.SetStateAction<number>>;
+  playerComplexity: number;
+}
+
+export const useUpdateScore = ({
+  caveOffset,
+  verticalSpeed,
+  setScore,
+  playerComplexity,
+}: UseUpdateScoreParams) => {
+  const lastSegmentIndex = useRef<number>(0);
+  const scoreMultiplier = 10;
+
+  useEffect(() => {
+    const currentSegmentIndex = Math.floor(caveOffset / 10);
+
+    if (currentSegmentIndex > lastSegmentIndex.current) {
+      const scoreIncrement =
+        scoreMultiplier * (verticalSpeed + playerComplexity);
+      setScore((prevScore) => prevScore + scoreIncrement);
+
+      lastSegmentIndex.current = currentSegmentIndex;
+    }
+  }, [caveOffset, verticalSpeed, setScore, playerComplexity]);
+};
