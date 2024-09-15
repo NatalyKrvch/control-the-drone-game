@@ -9,15 +9,11 @@ import {
   CircularProgress,
   Typography,
   Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useGameContext } from '@contextsGameContext';
+import { useGameContext } from '@contexts/GameContext';
 import { toast } from 'react-toastify';
+import Scoreboard from '@components/Scoreboard/Scoreboard';
 
 const HomePage = () => {
   const [open, setOpen] = useState(false);
@@ -65,27 +61,7 @@ const HomePage = () => {
         Let's play
       </Button>
 
-      <Typography variant="h5" gutterBottom>
-        Scoreboard
-      </Typography>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Player Name</TableCell>
-            <TableCell>Score</TableCell>
-            <TableCell>Complexity</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {mockScores.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.score}</TableCell>
-              <TableCell>{row.complexity}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <Scoreboard scores={mockScores} />
 
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Start New Game</DialogTitle>
