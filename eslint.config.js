@@ -29,24 +29,6 @@ export default [
       'import/no-unresolved': 'off',
       '@typescript-eslint/no-unused-vars': 'warn',
       'prettier/prettier': 'error',
-      'import/order': [
-        'error',
-        {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-          ],
-          'newlines-between': 'always',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
-          },
-        },
-      ],
     },
   },
 ];
