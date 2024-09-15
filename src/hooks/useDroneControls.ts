@@ -9,7 +9,7 @@ export const useDroneControls = (
   const [horizontalSpeed, setHorizontalSpeed] = useState(0);
   const [verticalSpeed, setVerticalSpeed] = useState(0);
 
-  const speedIncrement = 3;
+  const speedIncrement = 1;
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (gameStatus !== 'playing') return;
