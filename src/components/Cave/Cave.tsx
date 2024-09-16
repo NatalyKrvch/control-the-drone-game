@@ -1,5 +1,4 @@
 import { useCaveAnimation } from '@hooks/useCaveAnimation';
-import { useCaveWebSocket } from '@hooks/useCaveWebSocket';
 import { useCollisionDetection } from '@hooks/useCollisionDetection';
 import React, { useRef } from 'react';
 import { createCavePath } from './helpers/createCavePath';
@@ -25,17 +24,16 @@ const Cave = ({
   gameStatus,
   setScore,
 }: CaveProps) => {
-  const { playerId, token, caveData, playerComplexity } = useGameContext();
+  const { caveData, playerComplexity } = useGameContext();
   const caveOffset = useCaveAnimation(verticalSpeed, gameStatus);
   const caveRef = useRef<SVGSVGElement | null>(null);
-  const serverFinished = useCaveWebSocket(playerId, token);
 
   useCollisionDetection({
     dronePosition,
     caveOffset,
     gameStatus,
     setGameStatus,
-    serverFinished,
+    serverFinished: caveData.length === 0,
   });
 
   useUpdateScore({
