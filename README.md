@@ -1,51 +1,62 @@
-# React + TypeScript + Vite
+# Drone Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Drone Game is a game where the player controls a drone flying through a cave, avoiding collisions with the walls. The objective is to navigate as far as possible and score the highest points.
 
-Currently, two official plugins are available:
+## How to Run the Project Locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To run this project on your local machine, follow these steps:
 
-## Expanding the ESLint configuration
+1. **Clone the repository:**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+```bash
+https://github.com/NatalyKrvch/verbose-octo-enigma.git
+```
+2. **Navigate to the project directory:**
 
-- Configure the top-level `parserOptions` property like this:
+```bash
+cd verbose-octo-enigma
+```
+3. **Install dependencies:**
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+yarn install
+```
+4. **Run the project:**
+
+```bash
+yarn dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Game Description
+Drone Game is an interactive game where the player controls a drone flying through a cave. The player can control the drone using the keyboard:
+- Left/Right Arrow - Adjust the drone's horizontal speed.
+- Up/Down Arrow - Adjust the drone's vertical speed.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+The goal is to navigate through the cave without hitting the walls. The further you go, the more points you earn. The results of successfully completed games are stored in the browser's local storage and displayed on the leaderboard on the home page.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# verbose-octo-enigma
+
+## Technologies Used
+
+**Core Technologies**
+
+- React
+- TypeScript
+- Context API
+- Vite
+
+**Routing**
+- React Router
+
+**User Interface**
+- Material-UI: A React component library that provides modern design components. Used for building visual elements like buttons, dialogs, and tables.
+- React D3 Speedometer: A component for creating speedometers. Used to display the drone's speed (both horizontal and vertical) in the form of gauges.
+- React Toastify: A library for displaying notifications. Used to inform the user about game events such as game start or game end.
+
+**Data Handling**
+- Axios: A library for making HTTP requests. Used for communicating with the server, retrieving, and processing data (e.g., initializing the game and fetching tokens).
+- LocalStorage: A built-in browser mechanism for storing data on the client side. Used for saving game results (player name, difficulty, and final score) and displaying them on the leaderboard.
+
+**Game Implementation**
+- WebSocket: A protocol for real-time data transfer between client and server. Used for receiving cave data during the game, ensuring a smooth gameplay experience.
+- React Hooks: Built-in React functions for managing local state and side effects. Used for controlling game state, cave animation, drone control, and collision detection.
+- SVG
