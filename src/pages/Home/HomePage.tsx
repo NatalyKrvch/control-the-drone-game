@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGameContext } from 'context/GameContext';
 import { toast } from 'react-toastify';
 import Scoreboard from '@components/Scoreboard/Scoreboard';
+import { getStoredScores, GameScore } from 'utils/localStorageUtils';
 
 const HomePage = () => {
   const [open, setOpen] = useState(false);
@@ -22,6 +23,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const { initializeGame } = useGameContext();
   const navigate = useNavigate();
+  const [scores, setScores] = useState<GameScore[]>([]);
 
   const handleStartGame = async () => {
     if (!name) {
@@ -41,11 +43,11 @@ const HomePage = () => {
     }
   };
 
-  const mockScores = [
-    { name: 'Player1', score: 100, complexity: 5 },
-    { name: 'Player2', score: 80, complexity: 3 },
-    { name: 'Player3', score: 120, complexity: 7 },
-  ];
+  useEffect(() => {
+    const storedScores = getStoredScores();
+    storedScores.sort((a, b) => b.score - a.score);
+    setScores(storedScores);
+  }, []);
 
   return (
     <Container maxWidth="md" style={{ marginTop: '50px' }}>
@@ -61,7 +63,7 @@ const HomePage = () => {
         Let's play
       </Button>
 
-      <Scoreboard scores={mockScores} />
+      <Scoreboard scores={scores} />
 
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Start New Game</DialogTitle>

@@ -6,15 +6,10 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-
-interface Score {
-  name: string;
-  score: number;
-  complexity: number;
-}
+import { GameScore } from 'utils/localStorageUtils';
 
 interface ScoreboardProps {
-  scores: Score[];
+  scores: GameScore[];
 }
 
 const Scoreboard = ({ scores }: ScoreboardProps) => {

@@ -6,9 +6,10 @@ import { useDroneControls } from '@hooks/useDroneControls';
 import { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import { saveGameScore } from 'utils/localStorageUtils';
 
 const Game = () => {
-  const { playerId, token } = useGameContext();
+  const { playerId, token, playerName, playerComplexity } = useGameContext();
   const navigate = useNavigate();
   const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>(
     'playing',
@@ -26,6 +27,16 @@ const Game = () => {
       navigate('/');
     }
   }, [playerId, token, navigate]);
+
+  useEffect(() => {
+    if (gameStatus === 'won') {
+      saveGameScore({
+        name: playerName,
+        complexity: playerComplexity,
+        score,
+      });
+    }
+  }, [gameStatus, playerName, playerComplexity, score]);
 
   return (
     <div>
