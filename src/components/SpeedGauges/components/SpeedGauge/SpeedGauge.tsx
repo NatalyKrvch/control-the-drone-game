@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactSpeedometer from 'react-d3-speedometer';
+import ReactSpeedometer, { Transition } from 'react-d3-speedometer';
 
 interface SpeedGaugeProps {
   label: string;
@@ -18,6 +17,8 @@ const SpeedGauge = ({ label, speed, minSpeed, maxSpeed }: SpeedGaugeProps) => {
       startColor="green"
       endColor="red"
       segments={5}
+      width={200}
+      height={150}
       currentValueText={`${label}: ${speed}`}
       customSegmentStops={[
         minSpeed,
@@ -27,6 +28,8 @@ const SpeedGauge = ({ label, speed, minSpeed, maxSpeed }: SpeedGaugeProps) => {
         minSpeed + (4 * (maxSpeed - minSpeed)) / 5,
         maxSpeed,
       ]}
+      needleTransition={Transition.easeElastic}
+      needleTransitionDuration={1}
     />
   );
 };

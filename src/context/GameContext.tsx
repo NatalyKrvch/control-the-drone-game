@@ -1,5 +1,6 @@
-import useGameInit from '@hooks/useGameInit';
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+// context/GameContext.tsx
+import React, { useState, useEffect, createContext, ReactNode } from 'react';
+import { initGame, getTokenChunk } from 'services/api';
 
 interface GameContextProps {
   playerId: string | null;
@@ -7,18 +8,37 @@ interface GameContextProps {
   caveData: Array<[number, number]>;
   setCaveData: React.Dispatch<React.SetStateAction<Array<[number, number]>>>;
   initializeGame: (name: string, complexity: number) => Promise<void>;
+  playerName: string; // Додаємо назад playerName
+  playerComplexity: number; // Додаємо назад playerComplexity
 }
 
 const GameContext = createContext<GameContextProps | undefined>(undefined);
 
-interface GameProviderProps {
-  children: ReactNode;
-}
-
-export const GameProvider = ({ children }: GameProviderProps) => {
-  const { playerId, token, initializeGame } = useGameInit();
+export const GameProvider = ({ children }: { children: ReactNode }) => {
+  const [playerId, setPlayerId] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [caveData, setCaveData] = useState<Array<[number, number]>>([]);
+  const [playerName, setPlayerName] = useState<string>(''); // Додаємо стан playerName
+  const [playerComplexity, setPlayerComplexity] = useState<number>(0); // Додаємо стан playerComplexity
   const baseWsUrl = import.meta.env.VITE_API_BASE_WS_URL;
+
+  const initializeGame = async (name: string, complexity: number) => {
+    try {
+      setPlayerName(name); // Зберігаємо ім'я гравця
+      setPlayerComplexity(complexity); // Зберігаємо складність гри
+      const id = await initGame(name, complexity);
+      setPlayerId(id);
+
+      const tokenChunks = await Promise.all(
+        Array.from({ length: 4 }, (_, i) => getTokenChunk(id, i + 1)),
+      );
+      const fullToken = tokenChunks.join('');
+      setToken(fullToken);
+    } catch (error) {
+      console.error('Failed to initialize game:', error);
+      throw error;
+    }
+  };
 
   useEffect(() => {
     if (!playerId || !token) return;
@@ -62,6 +82,8 @@ export const GameProvider = ({ children }: GameProviderProps) => {
         caveData,
         setCaveData,
         initializeGame,
+        playerName, // Передаємо playerName в контекст
+        playerComplexity, // Передаємо playerComplexity в контекст
       }}
     >
       {children}

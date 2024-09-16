@@ -23,7 +23,7 @@ const SpeedGauges = ({ horizontalSpeed, verticalSpeed }: SpeedGaugesProps) => {
       <SpeedGauge
         label="Vertical Speed"
         speed={verticalSpeed}
-        minSpeed={1}
+        minSpeed={0}
         maxSpeed={10}
       />
     </div>

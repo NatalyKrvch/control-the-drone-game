@@ -1,17 +1,16 @@
-import Game from '@processes/Game/Game';
-import { GameProvider } from 'contexts/GameContext';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/styles.scss';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+import { BrowserRouter } from 'react-router-dom';
+import { GameProvider } from './context/GameContext';
+import App from 'App';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
     <GameProvider>
-      <Game />
-      <ToastContainer />
+      <BrowserRouter basename="verbose-octo-enigma/">
+        <App />
+      </BrowserRouter>
     </GameProvider>
   </React.StrictMode>,
 );

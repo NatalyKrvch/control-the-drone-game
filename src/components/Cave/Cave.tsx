@@ -1,20 +1,47 @@
-import Drone from '@components/Drone/Drone';
-import SpeedGauges from '@components/SpeedGauges/SpeedGauges';
-import { useGameContext } from '@contexts/GameContext';
 import { useCaveAnimation } from '@hooks/useCaveAnimation';
-import { useDroneControls } from '@hooks/useDroneControls';
-import { useRef } from 'react';
-
+import { useCollisionDetection } from '@hooks/useCollisionDetection';
+import React, { useRef } from 'react';
 import { createCavePath } from './helpers/createCavePath';
+import Drone from '@components/Drone/Drone';
+import { useUpdateScore } from '@hooks/useUpdateScore';
+import { useGameContext } from 'context/GameContext';
 
-const Cave = () => {
-  const { caveData } = useGameContext();
-  const { dronePosition, horizontalSpeed, verticalSpeed } = useDroneControls(
-    250,
-    500,
-  );
-  const caveOffset = useCaveAnimation(verticalSpeed);
+interface CaveProps {
+  dronePosition: number;
+  verticalSpeed: number;
+  setGameStatus: React.Dispatch<
+    React.SetStateAction<'playing' | 'won' | 'lost'>
+  >;
+  gameStatus: 'playing' | 'won' | 'lost';
+  setScore: React.Dispatch<React.SetStateAction<number>>;
+  score: number;
+}
+
+const Cave = ({
+  dronePosition,
+  verticalSpeed,
+  setGameStatus,
+  gameStatus,
+  setScore,
+}: CaveProps) => {
+  const { caveData, playerComplexity } = useGameContext();
+  const caveOffset = useCaveAnimation(verticalSpeed, gameStatus);
   const caveRef = useRef<SVGSVGElement | null>(null);
+
+  useCollisionDetection({
+    dronePosition,
+    caveOffset,
+    gameStatus,
+    setGameStatus,
+    serverFinished: caveData.length === 0,
+  });
+
+  useUpdateScore({
+    caveOffset,
+    verticalSpeed,
+    setScore,
+    playerComplexity,
+  });
 
   return (
     <div>
@@ -31,10 +58,6 @@ const Cave = () => {
         />
         <Drone position={dronePosition} />
       </svg>
-      <SpeedGauges
-        horizontalSpeed={horizontalSpeed}
-        verticalSpeed={verticalSpeed}
-      />
     </div>
   );
 };
