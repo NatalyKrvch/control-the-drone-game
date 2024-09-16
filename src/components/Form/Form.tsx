@@ -1,4 +1,4 @@
-import { useGameContext } from '@contexts/GameContext';
+import { useGameContext } from 'context/GameContext';
 import { useState } from 'react';
 
 const Form = () => {

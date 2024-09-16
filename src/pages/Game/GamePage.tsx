@@ -1,7 +1,7 @@
 import Cave from '@components/Cave/Cave';
 import GameOverModal from '@components/GameOverModal/GameOverModal';
 import SpeedGauges from '@components/SpeedGauges/SpeedGauges';
-import { useGameContext } from '@contextsGameContext';
+import { useGameContext } from 'context/GameContext';
 import { useDroneControls } from '@hooks/useDroneControls';
 import { useEffect, useState } from 'react';
 

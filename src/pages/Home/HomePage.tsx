@@ -11,7 +11,7 @@ import {
   Container,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useGameContext } from '@contexts/GameContext';
+import { useGameContext } from 'context/GameContext';
 import { toast } from 'react-toastify';
 import Scoreboard from '@components/Scoreboard/Scoreboard';
 

@@ -1,6 +1,6 @@
 import { calculateDroneRegions } from '@components/Cave/helpers/calculateDroneRegions';
 import { checkCollision } from '@components/Cave/helpers/checkCollision';
-import { useGameContext } from '@contextsGameContext';
+import { useGameContext } from 'context/GameContext';
 import { useEffect } from 'react';
 
 interface UseCollisionDetectionParams {
@@ -32,7 +32,7 @@ export const useCollisionDetection = ({
       const droneWidth = 10; // Drone's width at its widest point
       const sideWidth = 2; // Width of the side areas
 
-      // Calculate drone regions
+      // Calculates drone regions
       const { nose, back, leftSide, rightSide } = calculateDroneRegions({
         droneX,
         droneY,
@@ -56,9 +56,9 @@ export const useCollisionDetection = ({
         console.log('Side collision detected');
         setGameStatus('lost');
       } else if (serverFinished) {
-        // Calculate the total height of the cave
+        // Calculates the total height of the cave
         const totalCaveHeight = caveData.length * 10;
-        // Check if the cave has completely passed the drone
+        // Checks if the cave has completely passed the drone
         if (caveOffset >= totalCaveHeight) {
           console.log('Drone has reached the end of the cave.');
           setGameStatus('won');

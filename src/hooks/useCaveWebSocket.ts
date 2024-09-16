@@ -1,4 +1,4 @@
-import { useGameContext } from '@contextsGameContext';
+import { useGameContext } from 'context/GameContext';
 import { useEffect, useState } from 'react';
 
 export const useCaveWebSocket = (
