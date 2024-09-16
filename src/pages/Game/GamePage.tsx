@@ -4,18 +4,20 @@ import SpeedGauges from '@components/SpeedGauges/SpeedGauges';
 import { useGameContext } from 'context/GameContext';
 import { useDroneControls } from '@hooks/useDroneControls';
 import { useEffect, useState } from 'react';
-
+import { CircularProgress, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { saveGameScore } from 'utils/localStorageUtils';
+import GameInstructions from '@components/GameInstructions/GameInstructions';
 
-const Game = () => {
-  const { playerId, token, playerName, playerComplexity } = useGameContext();
+const GamePage = () => {
+  const { playerId, token, playerName, playerComplexity, caveData } =
+    useGameContext();
   const navigate = useNavigate();
   const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>(
     'playing',
   );
   const [score, setScore] = useState(0);
-
+  const [loading, setLoading] = useState(true); // Стан завантаження
   const { dronePosition, horizontalSpeed, verticalSpeed } = useDroneControls(
     250,
     500,
@@ -38,33 +40,79 @@ const Game = () => {
     }
   }, [gameStatus, playerName, playerComplexity, score]);
 
+  const segmentHeight = 10;
+  const viewHeight = 600;
+  const minSegments = Math.ceil(viewHeight / segmentHeight);
+
+  useEffect(() => {
+    if (caveData.length >= minSegments) {
+      setLoading(false);
+    }
+  }, [caveData, minSegments]);
+
   return (
-    <div>
-      <h1>Drone Game</h1>
-      <h2>Score: {score}</h2>
-      <Cave
-        dronePosition={dronePosition}
-        verticalSpeed={verticalSpeed}
-        setGameStatus={setGameStatus}
-        gameStatus={gameStatus}
-        setScore={setScore}
-        score={score}
-      />
-      <SpeedGauges
-        horizontalSpeed={horizontalSpeed}
-        verticalSpeed={verticalSpeed}
-      />
-      {gameStatus !== 'playing' && (
-        <GameOverModal
-          gameStatus={gameStatus}
-          onRestart={() => {
-            navigate('/');
-          }}
-          score={score}
-        />
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      minHeight="100vh"
+      position="relative"
+    >
+      <Box position="absolute" top={20} right={20} p={2} borderRadius="8px">
+        <Typography variant="h5">Score:</Typography>
+        <Typography variant="h4" color="primary">
+          {score}
+        </Typography>
+      </Box>
+      <Box position="absolute" top={0} left={20} p={2} borderRadius="8px">
+        <GameInstructions />
+      </Box>
+
+      {loading ? (
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          height="100vh"
+        >
+          <CircularProgress />
+          <Typography variant="h6" style={{ marginTop: '20px' }}>
+            Loading...
+          </Typography>
+        </Box>
+      ) : (
+        <>
+          <Box mb={2}>
+            <SpeedGauges
+              horizontalSpeed={horizontalSpeed}
+              verticalSpeed={verticalSpeed}
+            />
+          </Box>
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Cave
+              dronePosition={dronePosition}
+              verticalSpeed={verticalSpeed}
+              setGameStatus={setGameStatus}
+              gameStatus={gameStatus}
+              setScore={setScore}
+              score={score}
+            />
+          </Box>
+          {gameStatus !== 'playing' && (
+            <GameOverModal
+              gameStatus={gameStatus}
+              onRestart={() => {
+                navigate('/');
+              }}
+              score={score}
+            />
+          )}
+        </>
       )}
-    </div>
+    </Box>
   );
 };
 
-export default Game;
+export default GamePage;
