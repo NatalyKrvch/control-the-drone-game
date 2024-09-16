@@ -17,7 +17,7 @@ const GamePage = () => {
     'playing',
   );
   const [score, setScore] = useState(0);
-  const [loading, setLoading] = useState(true); // Стан завантаження
+  const [loading, setLoading] = useState(true);
   const { dronePosition, horizontalSpeed, verticalSpeed } = useDroneControls(
     250,
     500,

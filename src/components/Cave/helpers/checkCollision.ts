@@ -16,7 +16,6 @@ export const checkCollision = ({
   caveData,
   caveOffset,
 }: CheckCollisionParams): boolean => {
-  // Iterate over the vertical extent of the drone's area
   for (let y = area.topY; y <= area.bottomY; y++) {
     const globalY = y + caveOffset;
     const segmentIndex = Math.floor(globalY / 10);

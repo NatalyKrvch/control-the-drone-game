@@ -1,4 +1,3 @@
-// context/GameContext.tsx
 import React, { useState, useEffect, createContext, ReactNode } from 'react';
 import { initGame, getTokenChunk } from 'services/api';
 
@@ -8,8 +7,8 @@ interface GameContextProps {
   caveData: Array<[number, number]>;
   setCaveData: React.Dispatch<React.SetStateAction<Array<[number, number]>>>;
   initializeGame: (name: string, complexity: number) => Promise<void>;
-  playerName: string; // Додаємо назад playerName
-  playerComplexity: number; // Додаємо назад playerComplexity
+  playerName: string; 
+  playerComplexity: number;
 }
 
 const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -18,14 +17,14 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [caveData, setCaveData] = useState<Array<[number, number]>>([]);
-  const [playerName, setPlayerName] = useState<string>(''); // Додаємо стан playerName
-  const [playerComplexity, setPlayerComplexity] = useState<number>(0); // Додаємо стан playerComplexity
+  const [playerName, setPlayerName] = useState<string>('');
+  const [playerComplexity, setPlayerComplexity] = useState<number>(0);
   const baseWsUrl = import.meta.env.VITE_API_BASE_WS_URL;
 
   const initializeGame = async (name: string, complexity: number) => {
     try {
-      setPlayerName(name); // Зберігаємо ім'я гравця
-      setPlayerComplexity(complexity); // Зберігаємо складність гри
+      setPlayerName(name);
+      setPlayerComplexity(complexity);
       const id = await initGame(name, complexity);
       setPlayerId(id);
 
@@ -82,8 +81,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         caveData,
         setCaveData,
         initializeGame,
-        playerName, // Передаємо playerName в контекст
-        playerComplexity, // Передаємо playerComplexity в контекст
+        playerName,
+        playerComplexity,
       }}
     >
       {children}
