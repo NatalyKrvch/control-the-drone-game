@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import { createCavePath } from './helpers/createCavePath';
 import Drone from '@components/Drone/Drone';
 import { useUpdateScore } from '@hooks/useUpdateScore';
-import { useGameContext } from 'context/GameContext';
+import { useGameContext } from '@hooks/useGameContext';
 
 interface CaveProps {
   dronePosition: number;

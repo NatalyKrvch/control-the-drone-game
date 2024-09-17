@@ -1,4 +1,4 @@
-import { useGameContext } from 'context/GameContext';
+import { useGameContext } from '@hooks/useGameContext';
 import { useState } from 'react';
 
 const Form = () => {
@@ -22,7 +22,7 @@ const Form = () => {
         type="number"
         value={complexity}
         onChange={(e) => setComplexity(Number(e.target.value))}
-        min="1"
+        min="0"
         max="10"
       />
       <button onClick={handleStartGame}>Start Game</button>

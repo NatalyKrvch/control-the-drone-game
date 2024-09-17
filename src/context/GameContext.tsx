@@ -1,4 +1,10 @@
-import React, { useState, useEffect, createContext, ReactNode } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  ReactNode,
+} from 'react';
 import { initGame, getTokenChunk } from 'services/api';
 
 interface GameContextProps {
@@ -7,11 +13,13 @@ interface GameContextProps {
   caveData: Array<[number, number]>;
   setCaveData: React.Dispatch<React.SetStateAction<Array<[number, number]>>>;
   initializeGame: (name: string, complexity: number) => Promise<void>;
-  playerName: string; 
+  playerName: string;
   playerComplexity: number;
 }
 
-const GameContext = createContext<GameContextProps | undefined>(undefined);
+export const GameContext = createContext<GameContextProps | undefined>(
+  undefined,
+);
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [playerId, setPlayerId] = useState<string | null>(null);
@@ -88,12 +96,4 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </GameContext.Provider>
   );
-};
-
-export const useGameContext = () => {
-  const context = React.useContext(GameContext);
-  if (!context) {
-    throw new Error('useGameContext must be used within a GameProvider');
-  }
-  return context;
 };

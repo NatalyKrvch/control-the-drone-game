@@ -11,10 +11,10 @@ import {
   Container,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useGameContext } from 'context/GameContext';
 import { toast } from 'react-toastify';
 import Scoreboard from '@components/Scoreboard/Scoreboard';
 import { getStoredScores, GameScore } from 'utils/localStorageUtils';
+import { useGameContext } from '@hooks/useGameContext';
 
 const HomePage = () => {
   const [open, setOpen] = useState(false);

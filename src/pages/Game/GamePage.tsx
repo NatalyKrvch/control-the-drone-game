@@ -1,13 +1,13 @@
 import Cave from '@components/Cave/Cave';
 import GameOverModal from '@components/GameOverModal/GameOverModal';
 import SpeedGauges from '@components/SpeedGauges/SpeedGauges';
-import { useGameContext } from 'context/GameContext';
 import { useDroneControls } from '@hooks/useDroneControls';
 import { useEffect, useState } from 'react';
 import { CircularProgress, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { saveGameScore } from 'utils/localStorageUtils';
 import GameInstructions from '@components/GameInstructions/GameInstructions';
+import { useGameContext } from '@hooks/useGameContext';
 
 const GamePage = () => {
   const { playerId, token, playerName, playerComplexity, caveData } =

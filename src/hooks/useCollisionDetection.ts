@@ -1,7 +1,7 @@
 import { calculateDroneRegions } from '@components/Cave/helpers/calculateDroneRegions';
 import { checkCollision } from '@components/Cave/helpers/checkCollision';
-import { useGameContext } from 'context/GameContext';
 import { useEffect } from 'react';
+import { useGameContext } from './useGameContext';
 
 interface UseCollisionDetectionParams {
   dronePosition: number;
