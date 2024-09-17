@@ -1,11 +1,6 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  ReactNode,
-} from 'react';
-import { initGame, getTokenChunk } from 'services/api';
+import React, { useState, createContext, ReactNode } from 'react';
+import { useCaveWebSocket } from 'hooks/useCaveWebSocket';
+import { initializeGame } from './helpers/initializeGame';
 
 interface GameContextProps {
   playerId: string | null;
@@ -29,57 +24,20 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [playerComplexity, setPlayerComplexity] = useState<number>(0);
   const baseWsUrl = import.meta.env.VITE_API_BASE_WS_URL;
 
-  const initializeGame = async (name: string, complexity: number) => {
+  const handleInitializeGame = async (name: string, complexity: number) => {
     try {
       setPlayerName(name);
       setPlayerComplexity(complexity);
-      const id = await initGame(name, complexity);
+      const { id, token } = await initializeGame(name, complexity);
       setPlayerId(id);
-
-      const tokenChunks = await Promise.all(
-        Array.from({ length: 4 }, (_, i) => getTokenChunk(id, i + 1)),
-      );
-      const fullToken = tokenChunks.join('');
-      setToken(fullToken);
+      setToken(token);
     } catch (error) {
       console.error('Failed to initialize game:', error);
       throw error;
     }
   };
 
-  useEffect(() => {
-    if (!playerId || !token) return;
-
-    const ws = new WebSocket(baseWsUrl);
-
-    ws.onopen = () => {
-      console.log('WebSocket connection opened.');
-      ws.send(`player:${playerId}-${token}`);
-    };
-
-    ws.onmessage = (event) => {
-      const message = event.data;
-
-      if (message === 'finished') {
-        ws.close();
-      } else {
-        const [leftWall, rightWall] = message.split(',').map(Number);
-        setCaveData((prevData) => [...prevData, [leftWall, rightWall]]);
-      }
-    };
-
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    ws.onclose = () => {
-      console.log('WebSocket connection closed.');
-    };
-
-    return () => {
-      ws.close();
-    };
-  }, [playerId, token]);
+  useCaveWebSocket({ playerId, token, baseWsUrl, setCaveData });
 
   return (
     <GameContext.Provider
@@ -88,7 +46,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         token,
         caveData,
         setCaveData,
-        initializeGame,
+        initializeGame: handleInitializeGame,
         playerName,
         playerComplexity,
       }}
