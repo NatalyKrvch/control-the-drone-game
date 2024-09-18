@@ -6,7 +6,7 @@ export interface CaveProps {
   setGameStatus: React.Dispatch<React.SetStateAction<GameStatus>>;
   gameStatus: GameStatus;
   setScore: React.Dispatch<React.SetStateAction<number>>;
-  score: number;
+  score?: number;
 }
 
 export interface DroneRegion {

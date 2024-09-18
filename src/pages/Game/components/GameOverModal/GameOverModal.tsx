@@ -6,21 +6,15 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import { GameStatus } from 'constants';
 import { GameOverModalProps } from 'types';
+import useGameOverModal from './hooks/useGameOverModal';
 
 const GameOverModal = ({
   gameStatus,
   onRestart,
   score,
 }: GameOverModalProps) => {
-  let message = '';
-
-  if (gameStatus === GameStatus.Won) {
-    message = 'Congratulations! You won!';
-  } else {
-    message = 'The drone has been destroyed.';
-  }
+  const message = useGameOverModal(gameStatus);
 
   return (
     <Dialog open={true} onClose={onRestart}>

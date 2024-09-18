@@ -1,5 +1,5 @@
 import Cave from '@components/Cave/Cave';
-import GameOverModal from '@components/GameOverModal/GameOverModal';
+import GameOverModal from 'pages/Game/components/GameOverModal/GameOverModal';
 import SpeedGauges from '@components/SpeedGauges/SpeedGauges';
 import { useDroneControls } from '@hooks/useDroneControls';
 import { useEffect, useState } from 'react';
