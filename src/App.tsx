@@ -1,6 +1,6 @@
 import GamePage from 'pages/Game/GamePage';
 import HomePage from 'pages/Home/HomePage';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 const App = () => {
   return (
