@@ -9,6 +9,7 @@ import {
   SPEED_INCREMENT,
 } from 'constants';
 import { useEffect, useState } from 'react';
+import { adjustSpeed } from 'utils/speedUtils';
 
 export const useDroneControls = (
   initialPosition: number,
@@ -20,17 +21,6 @@ export const useDroneControls = (
   const [verticalSpeed, setVerticalSpeed] = useState(0);
 
   const isGamePlaying = gameStatus === GameStatus.Playing;
-
-  const adjustSpeed = (
-    setSpeed: React.Dispatch<React.SetStateAction<number>>,
-    adjustment: number,
-    minSpeed: number,
-    maxSpeed: number,
-  ) => {
-    setSpeed((prev) =>
-      Math.min(Math.max(prev + adjustment, minSpeed), maxSpeed),
-    );
-  };
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (!isGamePlaying) return;
@@ -67,6 +57,8 @@ export const useDroneControls = (
           MIN_VERTICAL_SPEED,
           MAX_VERTICAL_SPEED,
         );
+        break;
+      default:
         break;
     }
   };
