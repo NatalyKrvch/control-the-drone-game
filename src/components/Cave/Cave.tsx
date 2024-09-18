@@ -5,14 +5,13 @@ import { createCavePath } from './helpers/createCavePath';
 import Drone from '@components/Drone/Drone';
 import { useUpdateScore } from '@hooks/useUpdateScore';
 import { useGameContext } from '@hooks/useGameContext';
+import { GameStatus, MAX_FIELD_HEIGHT, MAX_FIELD_WIDTH } from 'constants';
 
 interface CaveProps {
   dronePosition: number;
   verticalSpeed: number;
-  setGameStatus: React.Dispatch<
-    React.SetStateAction<'playing' | 'won' | 'lost'>
-  >;
-  gameStatus: 'playing' | 'won' | 'lost';
+  setGameStatus: React.Dispatch<React.SetStateAction<GameStatus>>;
+  gameStatus: GameStatus;
   setScore: React.Dispatch<React.SetStateAction<number>>;
   score: number;
 }
@@ -47,8 +46,8 @@ const Cave = ({
     <div>
       <svg
         ref={caveRef}
-        width="500"
-        height="600"
+        width={MAX_FIELD_WIDTH}
+        height={MAX_FIELD_HEIGHT}
         style={{ backgroundColor: 'gray' }}
       >
         <path

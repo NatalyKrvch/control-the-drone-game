@@ -1,3 +1,4 @@
+import { CHUNKS_PER_PLAYER } from 'constants';
 import { initGame, getTokenChunk } from 'services/api';
 
 export const initializeGame = async (name: string, complexity: number) => {
@@ -5,7 +6,9 @@ export const initializeGame = async (name: string, complexity: number) => {
     const id = await initGame(name, complexity);
 
     const tokenChunks = await Promise.all(
-      Array.from({ length: 4 }, (_, i) => getTokenChunk(id, i + 1)),
+      Array.from({ length: CHUNKS_PER_PLAYER }, (_, i) =>
+        getTokenChunk(id, i + 1),
+      ),
     );
 
     const fullToken = tokenChunks.join('');

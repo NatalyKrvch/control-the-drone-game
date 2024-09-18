@@ -1,10 +1,10 @@
+import { LOCAL_STORAGE_KEY } from 'constants';
+
 export interface GameScore {
   name: string;
   complexity: number;
   score: number;
 }
-
-const LOCAL_STORAGE_KEY = 'gameScores';
 
 export const saveGameScore = (gameScore: GameScore) => {
   try {

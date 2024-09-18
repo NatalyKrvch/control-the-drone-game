@@ -6,9 +6,10 @@ import {
   Button,
   Typography,
 } from '@mui/material';
+import { GameStatus } from 'constants';
 
 interface GameOverModalProps {
-  gameStatus: 'won' | 'lost';
+  gameStatus: GameStatus.Won | GameStatus.Lost;
   onRestart: () => void;
   score: number;
 }
@@ -20,7 +21,7 @@ const GameOverModal = ({
 }: GameOverModalProps) => {
   let message = '';
 
-  if (gameStatus === 'won') {
+  if (gameStatus === GameStatus.Won) {
     message = 'Congratulations! You won!';
   } else {
     message = 'The drone has been destroyed.';

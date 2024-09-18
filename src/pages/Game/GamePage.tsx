@@ -8,19 +8,24 @@ import { useNavigate } from 'react-router-dom';
 import { saveGameScore } from 'utils/localStorageUtils';
 import GameInstructions from '@components/GameInstructions/GameInstructions';
 import { useGameContext } from '@hooks/useGameContext';
+import {
+  CAVE_SEGMENT_HEIGHT,
+  DRONE_INITIAL_X_POSITION,
+  GameStatus,
+  MAX_FIELD_HEIGHT,
+  MAX_FIELD_WIDTH,
+} from 'constants';
 
 const GamePage = () => {
   const { playerId, token, playerName, playerComplexity, caveData } =
     useGameContext();
   const navigate = useNavigate();
-  const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>(
-    'playing',
-  );
+  const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Playing);
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
   const { dronePosition, horizontalSpeed, verticalSpeed } = useDroneControls(
-    250,
-    500,
+    DRONE_INITIAL_X_POSITION,
+    MAX_FIELD_WIDTH,
     gameStatus,
   );
 
@@ -31,7 +36,7 @@ const GamePage = () => {
   }, [playerId, token, navigate]);
 
   useEffect(() => {
-    if (gameStatus === 'won') {
+    if (gameStatus === GameStatus.Won) {
       saveGameScore({
         name: playerName,
         complexity: playerComplexity,
@@ -40,9 +45,7 @@ const GamePage = () => {
     }
   }, [gameStatus, playerName, playerComplexity, score]);
 
-  const segmentHeight = 10;
-  const viewHeight = 600;
-  const minSegments = Math.ceil(viewHeight / segmentHeight);
+  const minSegments = Math.ceil(MAX_FIELD_HEIGHT / CAVE_SEGMENT_HEIGHT);
 
   useEffect(() => {
     if (caveData.length >= minSegments) {
@@ -100,7 +103,7 @@ const GamePage = () => {
               score={score}
             />
           </Box>
-          {gameStatus !== 'playing' && (
+          {gameStatus !== GameStatus.Playing && (
             <GameOverModal
               gameStatus={gameStatus}
               onRestart={() => {

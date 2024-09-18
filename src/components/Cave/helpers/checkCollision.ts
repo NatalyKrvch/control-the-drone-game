@@ -1,3 +1,5 @@
+import { FIELD_WIDTH_CENTER } from 'constants';
+
 interface Area {
   topY: number;
   bottomY: number;
@@ -22,8 +24,8 @@ export const checkCollision = ({
 
     if (segmentIndex >= 0 && segmentIndex < caveData.length) {
       const [leftWall, rightWall] = caveData[segmentIndex];
-      const leftBoundary = 250 + leftWall;
-      const rightBoundary = 250 + rightWall;
+      const leftBoundary = FIELD_WIDTH_CENTER + leftWall;
+      const rightBoundary = FIELD_WIDTH_CENTER + rightWall;
 
       if (area.leftX < leftBoundary || area.rightX > rightBoundary) {
         return true;
