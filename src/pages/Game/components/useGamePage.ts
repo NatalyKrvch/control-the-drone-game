@@ -1,7 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { saveGameScore } from 'utils';
-import { useGameContext, useDroneControls } from 'hooks';
 import {
   CAVE_SEGMENT_HEIGHT,
   DRONE_INITIAL_X_POSITION,
@@ -9,6 +5,11 @@ import {
   MAX_FIELD_HEIGHT,
   MAX_FIELD_WIDTH,
 } from 'constants';
+
+import { useDroneControls, useGameContext } from 'hooks';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { saveGameScore } from 'utils';
 
 const useGamePage = () => {
   const { playerId, token, playerName, playerComplexity, caveData } =

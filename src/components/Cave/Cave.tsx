@@ -1,7 +1,9 @@
-import { createCavePath } from './helpers/createCavePath';
-import Drone from '@components/Drone/Drone';
 import { MAX_FIELD_HEIGHT, MAX_FIELD_WIDTH } from 'constants';
+
+import { Drone } from '@components/Drone';
 import { CaveProps } from 'types';
+
+import { createCavePath } from './helpers/createCavePath';
 import useCave from './hooks/useCave';
 
 const Cave = ({

@@ -1,4 +1,5 @@
 import { DRONE_HEIGHT, DRONE_OFFSET } from 'constants';
+
 import { DroneProps } from 'types';
 
 const Drone = ({ position }: DroneProps) => {

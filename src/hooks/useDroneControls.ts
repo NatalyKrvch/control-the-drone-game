@@ -8,8 +8,9 @@ import {
   MIN_VERTICAL_SPEED,
   SPEED_INCREMENT,
 } from 'constants';
+
 import { useEffect, useState } from 'react';
-import { adjustSpeed } from 'utils/speedUtils';
+import { adjustSpeed } from 'utils';
 
 export const useDroneControls = (
   initialPosition: number,

@@ -1,5 +1,6 @@
 import { GameStatus, VERTICAL_SPEED_MULTIPLIER } from 'constants';
-import { useState, useEffect } from 'react';
+
+import { useEffect, useState } from 'react';
 
 export const useCaveAnimation = (
   verticalSpeed: number,

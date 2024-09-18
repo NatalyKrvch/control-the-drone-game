@@ -1,5 +1,6 @@
 import { CHUNKS_PER_PLAYER } from 'constants';
-import { initGame, getTokenChunk } from 'services/api';
+
+import { getTokenChunk, initGame } from 'services/api';
 
 export const initializeGame = async (name: string, complexity: number) => {
   try {

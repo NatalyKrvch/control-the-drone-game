@@ -1,8 +1,10 @@
-import { useCaveAnimation } from '@hooks/useCaveAnimation';
-import { useCollisionDetection } from '@hooks/useCollisionDetection';
+import {
+  useCaveAnimation,
+  useCollisionDetection,
+  useGameContext,
+  useUpdateScore,
+} from 'hooks';
 import { useRef } from 'react';
-import { useUpdateScore } from '@hooks/useUpdateScore';
-import { useGameContext } from '@hooks/useGameContext';
 import { CaveProps } from 'types';
 
 const useCave = ({

@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useGameContext } from 'hooks';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getStoredScores } from 'utils/localStorageUtils';
-import { useGameContext } from '@hooks/useGameContext';
 import { GameScore } from 'types';
+import { getStoredScores } from 'utils';
 
 const useHomePage = () => {
   const [open, setOpen] = useState(false);

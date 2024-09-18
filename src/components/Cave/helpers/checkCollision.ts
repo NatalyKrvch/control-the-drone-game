@@ -1,4 +1,5 @@
 import { FIELD_WIDTH_CENTER } from 'constants';
+
 import { CheckCollisionParams } from 'types';
 
 export const checkCollision = ({

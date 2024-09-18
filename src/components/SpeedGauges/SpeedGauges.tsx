@@ -4,8 +4,10 @@ import {
   MIN_HORIZONTAL_SPEED,
   MIN_VERTICAL_SPEED,
 } from 'constants';
-import SpeedGauge from './components/SpeedGauge/SpeedGauge';
+
 import { SpeedGaugesProps } from 'types';
+
+import { SpeedGauge } from './components/SpeedGauge';
 
 const SpeedGauges = ({ horizontalSpeed, verticalSpeed }: SpeedGaugesProps) => {
   return (

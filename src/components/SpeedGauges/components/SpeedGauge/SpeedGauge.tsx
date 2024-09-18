@@ -1,4 +1,5 @@
 import { SPEEDOMETER_SEGMENTS_COUNT } from 'constants';
+
 import ReactSpeedometer, { Transition } from 'react-d3-speedometer';
 import { SpeedGaugeProps } from 'types';
 

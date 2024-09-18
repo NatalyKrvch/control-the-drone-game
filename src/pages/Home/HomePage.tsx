@@ -1,16 +1,16 @@
-import React from 'react';
+import { Scoreboard } from '@components/Scoreboard';
 import {
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  Slider,
   CircularProgress,
-  Typography,
   Container,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Slider,
+  TextField,
+  Typography,
 } from '@mui/material';
-import Scoreboard from '@components/Scoreboard/Scoreboard';
+
 import useHomePage from './hooks/useHomePage';
 
 const HomePage = () => {

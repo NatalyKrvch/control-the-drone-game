@@ -10,12 +10,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./src",
     "paths": {
-      "@services/*": ["services/*"],
       "@components/*": ["components/*"],
-      "@hooks/*": ["hooks/*"],
-      "@processes/*": ["processes/*"],
-      "@contexts*": ["contexts/*"],
-      "@styles/*": ["styles/*"]
+      "@pages*": ["pages/*"]
     }
   },
   "include": ["src/**/*", "src/vite-env.d.ts"],

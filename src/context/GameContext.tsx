@@ -1,7 +1,8 @@
-import React, { useState, createContext, ReactNode } from 'react';
-import { useCaveWebSocket } from 'hooks/useCaveWebSocket';
-import { initializeGame } from './helpers/initializeGame';
+import { useCaveWebSocket } from 'hooks';
+import { ReactNode, createContext, useState } from 'react';
 import { GameContextProps } from 'types';
+
+import { initializeGame } from './helpers/initializeGame';
 
 export const GameContext = createContext<GameContextProps | undefined>(
   undefined,

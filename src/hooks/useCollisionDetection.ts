@@ -1,7 +1,3 @@
-import { calculateDroneRegions } from '@components/Cave/helpers/calculateDroneRegions';
-import { checkCollision } from '@components/Cave/helpers/checkCollision';
-import { useEffect } from 'react';
-import { useGameContext } from './useGameContext';
 import {
   CAVE_SEGMENT_HEIGHT,
   DRONE_BACK_HEIGHT,
@@ -11,7 +7,12 @@ import {
   DRONE_WIDTH,
   GameStatus,
 } from 'constants';
+
+import { calculateDroneRegions, checkCollision } from '@components/Cave';
+import { useEffect } from 'react';
 import { UseCollisionDetectionParams } from 'types';
+
+import { useGameContext } from './useGameContext';
 
 export const useCollisionDetection = ({
   dronePosition,

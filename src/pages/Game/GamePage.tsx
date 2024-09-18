@@ -1,9 +1,11 @@
-import Cave from '@components/Cave/Cave';
-import GameOverModal from 'pages/Game/components/GameOverModal/GameOverModal';
-import SpeedGauges from '@components/SpeedGauges/SpeedGauges';
-import { CircularProgress, Box, Typography } from '@mui/material';
-import GameInstructions from '@components/GameInstructions/GameInstructions';
 import { GameStatus } from 'constants';
+
+import { Cave } from '@components/Cave';
+import { GameInstructions } from '@components/GameInstructions';
+import { SpeedGauges } from '@components/SpeedGauges';
+import { Box, CircularProgress, Typography } from '@mui/material';
+
+import { GameOverModal } from './components/GameOverModal';
 import useGamePage from './components/useGamePage';
 
 const GamePage = () => {

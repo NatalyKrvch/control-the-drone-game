@@ -1,4 +1,5 @@
 import { CAVE_SEGMENT_HEIGHT, SCORE_MULTIPLIER } from 'constants';
+
 import { useEffect, useRef } from 'react';
 import { UseUpdateScoreParams } from 'types';
 

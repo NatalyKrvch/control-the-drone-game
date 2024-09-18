@@ -1,4 +1,5 @@
 import { LOCAL_STORAGE_KEY } from 'constants';
+
 import { GameScore } from 'types';
 
 export const saveGameScore = (gameScore: GameScore) => {
