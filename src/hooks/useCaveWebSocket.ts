@@ -13,8 +13,10 @@ export const useCaveWebSocket = ({
   baseWsUrl,
   setCaveData,
 }: UseCaveWebSocketParams) => {
+  const isPlayerInfoMissing = !playerId || !token;
+
   useEffect(() => {
-    if (!playerId || !token) return;
+    if (isPlayerInfoMissing) return;
 
     const ws = new WebSocket(baseWsUrl);
 

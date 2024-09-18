@@ -19,28 +19,53 @@ export const useDroneControls = (
   const [horizontalSpeed, setHorizontalSpeed] = useState(0);
   const [verticalSpeed, setVerticalSpeed] = useState(0);
 
+  const isGamePlaying = gameStatus === GameStatus.Playing;
+
+  const adjustSpeed = (
+    setSpeed: React.Dispatch<React.SetStateAction<number>>,
+    adjustment: number,
+    minSpeed: number,
+    maxSpeed: number,
+  ) => {
+    setSpeed((prev) =>
+      Math.min(Math.max(prev + adjustment, minSpeed), maxSpeed),
+    );
+  };
+
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (gameStatus !== GameStatus.Playing) return;
+    if (!isGamePlaying) return;
 
     switch (event.key) {
       case 'ArrowLeft':
-        setHorizontalSpeed((prev) =>
-          Math.max(prev - SPEED_INCREMENT, MIN_HORIZONTAL_SPEED),
+        adjustSpeed(
+          setHorizontalSpeed,
+          -SPEED_INCREMENT,
+          MIN_HORIZONTAL_SPEED,
+          MAX_HORIZONTAL_SPEED,
         );
         break;
       case 'ArrowRight':
-        setHorizontalSpeed((prev) =>
-          Math.min(prev + SPEED_INCREMENT, MAX_HORIZONTAL_SPEED),
+        adjustSpeed(
+          setHorizontalSpeed,
+          SPEED_INCREMENT,
+          MIN_HORIZONTAL_SPEED,
+          MAX_HORIZONTAL_SPEED,
         );
         break;
       case 'ArrowDown':
-        setVerticalSpeed((prev) =>
-          Math.min(prev + SPEED_INCREMENT, MAX_VERTICAL_SPEED),
+        adjustSpeed(
+          setVerticalSpeed,
+          SPEED_INCREMENT,
+          MIN_VERTICAL_SPEED,
+          MAX_VERTICAL_SPEED,
         );
         break;
       case 'ArrowUp':
-        setVerticalSpeed((prev) =>
-          Math.max(prev - SPEED_INCREMENT, MIN_VERTICAL_SPEED),
+        adjustSpeed(
+          setVerticalSpeed,
+          -SPEED_INCREMENT,
+          MIN_VERTICAL_SPEED,
+          MAX_VERTICAL_SPEED,
         );
         break;
     }
@@ -54,7 +79,7 @@ export const useDroneControls = (
   }, [gameStatus]);
 
   useEffect(() => {
-    if (gameStatus !== GameStatus.Playing) return;
+    if (!isGamePlaying) return;
 
     const moveDrone = () => {
       setDronePosition((prev) => {

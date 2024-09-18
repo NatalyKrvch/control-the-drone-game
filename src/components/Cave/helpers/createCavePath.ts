@@ -9,11 +9,16 @@ export const createCavePath = (
   let path = `M ${FIELD_WIDTH_CENTER + caveData[0][0]} ${-caveOffset}`;
 
   caveData.forEach((point, index) => {
-    if (index < caveData.length - 1) {
+    const isNotLastSegment = index < caveData.length - 1;
+
+    if (isNotLastSegment) {
       const [leftWall, rightWall] = point;
       const [nextLeftWall, nextRightWall] = caveData[index + 1];
+      const isValidLeftWall = !isNaN(leftWall);
+      const isValidNextLeftWall = !isNaN(nextLeftWall);
+      const isEveryWallValid = isValidLeftWall && isValidNextLeftWall;
 
-      if (!isNaN(leftWall) && !isNaN(nextLeftWall)) {
+      if (isEveryWallValid) {
         const controlPointX1 = FIELD_WIDTH_CENTER + leftWall;
         const controlPointX2 = FIELD_WIDTH_CENTER + nextLeftWall;
         const currentHeight = index * CAVE_SEGMENT_HEIGHT - caveOffset;
@@ -28,8 +33,10 @@ export const createCavePath = (
   for (let i = caveData.length - 1; i >= 0; i--) {
     const [leftWall, rightWall] = caveData[i];
     const [prevLeftWall, prevRightWall] = i > 0 ? caveData[i - 1] : [0, 0];
+    const isValidRightWall = !isNaN(rightWall);
+    const isValidPrevRightWall = !isNaN(prevRightWall);
 
-    if (!isNaN(rightWall) && !isNaN(prevRightWall)) {
+    if (isValidRightWall && isValidPrevRightWall) {
       const controlPointX1 = FIELD_WIDTH_CENTER + rightWall;
       const controlPointX2 = FIELD_WIDTH_CENTER + prevRightWall;
       const currentHeight = i * CAVE_SEGMENT_HEIGHT - caveOffset;

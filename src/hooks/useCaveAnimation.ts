@@ -6,9 +6,10 @@ export const useCaveAnimation = (
   gameStatus: GameStatus,
 ) => {
   const [caveOffset, setCaveOffset] = useState(0);
+  const isGameNotPlaying = gameStatus !== GameStatus.Playing;
 
   useEffect(() => {
-    if (gameStatus !== GameStatus.Playing) return;
+    if (isGameNotPlaying) return;
 
     let animationFrameId: number;
 

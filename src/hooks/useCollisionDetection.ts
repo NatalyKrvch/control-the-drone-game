@@ -28,34 +28,57 @@ export const useCollisionDetection = ({
   serverFinished,
 }: UseCollisionDetectionParams) => {
   const { caveData } = useGameContext();
+  const shouldSkipCollisionDetection =
+    caveData.length === 0 || gameStatus !== GameStatus.Playing;
+
+  const noseHeight = DRONE_NOSE_HEIGHT;
+  const backHeight = DRONE_BACK_HEIGHT;
+  const droneWidth = DRONE_WIDTH;
+  const sideWidth = DRONE_SIDE_WIDTH;
+
+  const droneX = dronePosition;
+  const droneY = DRONE_INITIAL_Y_POSITION;
+
+  const { nose, back, leftSide, rightSide } = calculateDroneRegions({
+    droneX,
+    droneY,
+    droneWidth,
+    noseHeight,
+    backHeight,
+    sideWidth,
+  });
 
   useEffect(() => {
-    if (caveData.length === 0 || gameStatus !== GameStatus.Playing) return;
+    if (shouldSkipCollisionDetection) return;
 
-    // Drone dimensions
-    const droneX = dronePosition;
-    const droneY = DRONE_INITIAL_Y_POSITION;
-    const noseHeight = DRONE_NOSE_HEIGHT;
-    const backHeight = DRONE_BACK_HEIGHT;
-    const droneWidth = DRONE_WIDTH;
-    const sideWidth = DRONE_SIDE_WIDTH; // Width of the side areas
-
-    const { nose, back, leftSide, rightSide } = calculateDroneRegions({
-      droneX,
-      droneY,
-      droneWidth,
-      noseHeight,
-      backHeight,
-      sideWidth,
+    const isNoseCollision = checkCollision({
+      area: nose,
+      caveData,
+      caveOffset,
+    });
+    const isBackCollision = checkCollision({
+      area: back,
+      caveData,
+      caveOffset,
+    });
+    const isLeftSideCollision = checkCollision({
+      area: leftSide,
+      caveData,
+      caveOffset,
+    });
+    const isRightSideCollision = checkCollision({
+      area: rightSide,
+      caveData,
+      caveOffset,
     });
 
-    // Collision detection
-    if (
-      checkCollision({ area: nose, caveData, caveOffset }) ||
-      checkCollision({ area: back, caveData, caveOffset }) ||
-      checkCollision({ area: leftSide, caveData, caveOffset }) ||
-      checkCollision({ area: rightSide, caveData, caveOffset })
-    ) {
+    const isCollisionDetected =
+      isNoseCollision ||
+      isBackCollision ||
+      isLeftSideCollision ||
+      isRightSideCollision;
+
+    if (isCollisionDetected) {
       console.log('Collision detected');
       setGameStatus(GameStatus.Lost);
       return;
@@ -70,7 +93,10 @@ export const useCollisionDetection = ({
       }
     }
   }, [
-    dronePosition,
+    nose,
+    back,
+    leftSide,
+    rightSide,
     caveOffset,
     caveData,
     gameStatus,

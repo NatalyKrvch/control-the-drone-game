@@ -29,14 +29,19 @@ const GamePage = () => {
     gameStatus,
   );
 
+  const minSegments = Math.ceil(MAX_FIELD_HEIGHT / CAVE_SEGMENT_HEIGHT);
+  const isPlayerDataMissing = !playerId || !token;
+  const isGameWon = gameStatus === GameStatus.Won;
+  const hasEnoughSegments = caveData.length >= minSegments;
+
   useEffect(() => {
-    if (!playerId || !token) {
+    if (isPlayerDataMissing) {
       navigate('/');
     }
   }, [playerId, token, navigate]);
 
   useEffect(() => {
-    if (gameStatus === GameStatus.Won) {
+    if (isGameWon) {
       saveGameScore({
         name: playerName,
         complexity: playerComplexity,
@@ -45,10 +50,8 @@ const GamePage = () => {
     }
   }, [gameStatus, playerName, playerComplexity, score]);
 
-  const minSegments = Math.ceil(MAX_FIELD_HEIGHT / CAVE_SEGMENT_HEIGHT);
-
   useEffect(() => {
-    if (caveData.length >= minSegments) {
+    if (hasEnoughSegments) {
       setLoading(false);
     }
   }, [caveData, minSegments]);

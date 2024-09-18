@@ -28,6 +28,8 @@ export const VERTICAL_SPEED_MULTIPLIER = 0.5;
 
 export const SPEEDOMETER_SEGMENTS_COUNT = 5;
 
+export const SCORE_MULTIPLIER = 10;
+
 export enum GameStatus {
   Playing = 'playing',
   Won = 'won',
