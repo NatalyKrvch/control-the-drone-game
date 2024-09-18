@@ -1,60 +1,23 @@
 import Cave from '@components/Cave/Cave';
 import GameOverModal from 'pages/Game/components/GameOverModal/GameOverModal';
 import SpeedGauges from '@components/SpeedGauges/SpeedGauges';
-import { useDroneControls } from '@hooks/useDroneControls';
-import { useEffect, useState } from 'react';
 import { CircularProgress, Box, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { saveGameScore } from 'utils/localStorageUtils';
 import GameInstructions from '@components/GameInstructions/GameInstructions';
-import { useGameContext } from '@hooks/useGameContext';
-import {
-  CAVE_SEGMENT_HEIGHT,
-  DRONE_INITIAL_X_POSITION,
-  GameStatus,
-  MAX_FIELD_HEIGHT,
-  MAX_FIELD_WIDTH,
-} from 'constants';
+import { GameStatus } from 'constants';
+import useGamePage from './components/useGamePage';
 
 const GamePage = () => {
-  const { playerId, token, playerName, playerComplexity, caveData } =
-    useGameContext();
-  const navigate = useNavigate();
-  const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Playing);
-  const [score, setScore] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const { dronePosition, horizontalSpeed, verticalSpeed } = useDroneControls(
-    DRONE_INITIAL_X_POSITION,
-    MAX_FIELD_WIDTH,
+  const {
     gameStatus,
-  );
-
-  const minSegments = Math.ceil(MAX_FIELD_HEIGHT / CAVE_SEGMENT_HEIGHT);
-  const isPlayerDataMissing = !playerId || !token;
-  const isGameWon = gameStatus === GameStatus.Won;
-  const hasEnoughSegments = caveData.length >= minSegments;
-
-  useEffect(() => {
-    if (isPlayerDataMissing) {
-      navigate('/');
-    }
-  }, [playerId, token, navigate]);
-
-  useEffect(() => {
-    if (isGameWon) {
-      saveGameScore({
-        name: playerName,
-        complexity: playerComplexity,
-        score,
-      });
-    }
-  }, [gameStatus, playerName, playerComplexity, score]);
-
-  useEffect(() => {
-    if (hasEnoughSegments) {
-      setLoading(false);
-    }
-  }, [caveData, minSegments]);
+    setGameStatus,
+    score,
+    setScore,
+    loading,
+    dronePosition,
+    horizontalSpeed,
+    verticalSpeed,
+    navigate,
+  } = useGamePage();
 
   return (
     <Box
