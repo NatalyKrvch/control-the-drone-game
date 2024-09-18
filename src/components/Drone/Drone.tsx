@@ -1,8 +1,5 @@
 import { DRONE_HEIGHT, DRONE_OFFSET } from 'constants';
-
-interface DroneProps {
-  position: number;
-}
+import { DroneProps } from 'types';
 
 const Drone = ({ position }: DroneProps) => {
   return (

@@ -11,14 +11,7 @@ import {
   DRONE_WIDTH,
   GameStatus,
 } from 'constants';
-
-interface UseCollisionDetectionParams {
-  dronePosition: number;
-  caveOffset: number;
-  gameStatus: GameStatus;
-  setGameStatus: React.Dispatch<React.SetStateAction<GameStatus>>;
-  serverFinished: boolean;
-}
+import { UseCollisionDetectionParams } from 'types';
 
 export const useCollisionDetection = ({
   dronePosition,

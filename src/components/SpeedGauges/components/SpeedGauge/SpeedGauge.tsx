@@ -1,12 +1,6 @@
 import { SPEEDOMETER_SEGMENTS_COUNT } from 'constants';
 import ReactSpeedometer, { Transition } from 'react-d3-speedometer';
-
-interface SpeedGaugeProps {
-  label: string;
-  speed: number;
-  minSpeed: number;
-  maxSpeed: number;
-}
+import { SpeedGaugeProps } from 'types';
 
 const SpeedGauge = ({ label, speed, minSpeed, maxSpeed }: SpeedGaugeProps) => {
   return (

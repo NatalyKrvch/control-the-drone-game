@@ -1,17 +1,5 @@
 import { FIELD_WIDTH_CENTER } from 'constants';
-
-interface Area {
-  topY: number;
-  bottomY: number;
-  leftX: number;
-  rightX: number;
-}
-
-interface CheckCollisionParams {
-  area: Area;
-  caveData: Array<[number, number]>;
-  caveOffset: number;
-}
+import { CheckCollisionParams } from 'types';
 
 export const checkCollision = ({
   area,

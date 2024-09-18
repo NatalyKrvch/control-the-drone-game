@@ -1,12 +1,6 @@
 import { CAVE_SEGMENT_HEIGHT, SCORE_MULTIPLIER } from 'constants';
 import { useEffect, useRef } from 'react';
-
-interface UseUpdateScoreParams {
-  caveOffset: number;
-  verticalSpeed: number;
-  setScore: React.Dispatch<React.SetStateAction<number>>;
-  playerComplexity: number;
-}
+import { UseUpdateScoreParams } from 'types';
 
 export const useUpdateScore = ({
   caveOffset,

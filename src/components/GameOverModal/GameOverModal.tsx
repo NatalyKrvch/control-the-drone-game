@@ -7,12 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { GameStatus } from 'constants';
-
-interface GameOverModalProps {
-  gameStatus: GameStatus.Won | GameStatus.Lost;
-  onRestart: () => void;
-  score: number;
-}
+import { GameOverModalProps } from 'types';
 
 const GameOverModal = ({
   gameStatus,

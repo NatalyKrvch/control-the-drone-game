@@ -1,16 +1,7 @@
 import React, { useState, createContext, ReactNode } from 'react';
 import { useCaveWebSocket } from 'hooks/useCaveWebSocket';
 import { initializeGame } from './helpers/initializeGame';
-
-interface GameContextProps {
-  playerId: string | null;
-  token: string | null;
-  caveData: Array<[number, number]>;
-  setCaveData: React.Dispatch<React.SetStateAction<Array<[number, number]>>>;
-  initializeGame: (name: string, complexity: number) => Promise<void>;
-  playerName: string;
-  playerComplexity: number;
-}
+import { GameContextProps } from 'types';
 
 export const GameContext = createContext<GameContextProps | undefined>(
   undefined,

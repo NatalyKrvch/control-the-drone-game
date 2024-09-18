@@ -1,11 +1,5 @@
 import { useEffect } from 'react';
-
-interface UseCaveWebSocketParams {
-  playerId: string | null;
-  token: string | null;
-  baseWsUrl: string;
-  setCaveData: React.Dispatch<React.SetStateAction<Array<[number, number]>>>;
-}
+import { UseCaveWebSocketParams } from 'types';
 
 export const useCaveWebSocket = ({
   playerId,
