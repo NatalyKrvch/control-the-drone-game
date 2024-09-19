@@ -4,17 +4,7 @@
   "trailingComma": "all",
   "tabWidth": 2,
   "endOfLine": "auto",
-  "importOrder": [
-    "^react(.*)$",
-    "<THIRD_PARTY_MODULES>",
-    "^@/components/(.*)$",
-    "^@/hooks/(.*)$",
-    "^@/processes/(.*)$",
-    "^@/redux/(.*)$",
-    "^@/services/(.*)$",
-    "^@/styles/(.*)$",
-    "^[./]"
-  ],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "plugins": ["prettier-plugin-import-sort"]
 }

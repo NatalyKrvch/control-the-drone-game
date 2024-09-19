@@ -1,15 +1,6 @@
-interface Area {
-  topY: number;
-  bottomY: number;
-  leftX: number;
-  rightX: number;
-}
+import { FIELD_WIDTH_CENTER } from 'constants';
 
-interface CheckCollisionParams {
-  area: Area;
-  caveData: Array<[number, number]>;
-  caveOffset: number;
-}
+import { CheckCollisionParams } from 'types';
 
 export const checkCollision = ({
   area,
@@ -19,13 +10,17 @@ export const checkCollision = ({
   for (let y = area.topY; y <= area.bottomY; y++) {
     const globalY = y + caveOffset;
     const segmentIndex = Math.floor(globalY / 10);
+    const isValidSegmentIndex =
+      segmentIndex >= 0 && segmentIndex < caveData.length;
 
-    if (segmentIndex >= 0 && segmentIndex < caveData.length) {
+    if (isValidSegmentIndex) {
       const [leftWall, rightWall] = caveData[segmentIndex];
-      const leftBoundary = 250 + leftWall;
-      const rightBoundary = 250 + rightWall;
+      const leftBoundary = FIELD_WIDTH_CENTER + leftWall;
+      const rightBoundary = FIELD_WIDTH_CENTER + rightWall;
+      const isCollisionWithWall =
+        area.leftX < leftBoundary || area.rightX > rightBoundary;
 
-      if (area.leftX < leftBoundary || area.rightX > rightBoundary) {
+      if (isCollisionWithWall) {
         return true;
       }
     }

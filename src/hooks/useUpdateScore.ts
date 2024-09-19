@@ -1,11 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { CAVE_SEGMENT_HEIGHT, SCORE_MULTIPLIER } from 'constants';
 
-interface UseUpdateScoreParams {
-  caveOffset: number;
-  verticalSpeed: number;
-  setScore: React.Dispatch<React.SetStateAction<number>>;
-  playerComplexity: number;
-}
+import { useEffect, useRef } from 'react';
+import { UseUpdateScoreParams } from 'types';
 
 export const useUpdateScore = ({
   caveOffset,
@@ -14,14 +10,14 @@ export const useUpdateScore = ({
   playerComplexity,
 }: UseUpdateScoreParams) => {
   const lastSegmentIndex = useRef<number>(0);
-  const scoreMultiplier = 10;
 
   useEffect(() => {
-    const currentSegmentIndex = Math.floor(caveOffset / 10);
+    const currentSegmentIndex = Math.floor(caveOffset / CAVE_SEGMENT_HEIGHT);
+    const isNewSegment = currentSegmentIndex > lastSegmentIndex.current;
 
-    if (currentSegmentIndex > lastSegmentIndex.current) {
+    if (isNewSegment) {
       const scoreIncrement =
-        scoreMultiplier * (verticalSpeed + playerComplexity);
+        SCORE_MULTIPLIER * (verticalSpeed + playerComplexity);
       setScore((prevScore) => prevScore + scoreIncrement);
 
       lastSegmentIndex.current = currentSegmentIndex;

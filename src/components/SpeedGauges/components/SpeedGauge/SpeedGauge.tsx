@@ -1,11 +1,7 @@
-import ReactSpeedometer, { Transition } from 'react-d3-speedometer';
+import { SPEEDOMETER_SEGMENTS_COUNT } from 'constants';
 
-interface SpeedGaugeProps {
-  label: string;
-  speed: number;
-  minSpeed: number;
-  maxSpeed: number;
-}
+import ReactSpeedometer, { Transition } from 'react-d3-speedometer';
+import { SpeedGaugeProps } from 'types';
 
 const SpeedGauge = ({ label, speed, minSpeed, maxSpeed }: SpeedGaugeProps) => {
   return (
@@ -22,10 +18,10 @@ const SpeedGauge = ({ label, speed, minSpeed, maxSpeed }: SpeedGaugeProps) => {
       currentValueText={`${label}: ${speed}`}
       customSegmentStops={[
         minSpeed,
-        minSpeed + (maxSpeed - minSpeed) / 5,
-        minSpeed + (2 * (maxSpeed - minSpeed)) / 5,
-        minSpeed + (3 * (maxSpeed - minSpeed)) / 5,
-        minSpeed + (4 * (maxSpeed - minSpeed)) / 5,
+        minSpeed + (maxSpeed - minSpeed) / SPEEDOMETER_SEGMENTS_COUNT,
+        minSpeed + (2 * (maxSpeed - minSpeed)) / SPEEDOMETER_SEGMENTS_COUNT,
+        minSpeed + (3 * (maxSpeed - minSpeed)) / SPEEDOMETER_SEGMENTS_COUNT,
+        minSpeed + (4 * (maxSpeed - minSpeed)) / SPEEDOMETER_SEGMENTS_COUNT,
         maxSpeed,
       ]}
       needleTransition={Transition.easeElastic}

@@ -1,9 +1,13 @@
-import SpeedGauge from './components/SpeedGauge/SpeedGauge';
+import {
+  MAX_HORIZONTAL_SPEED,
+  MAX_VERTICAL_SPEED,
+  MIN_HORIZONTAL_SPEED,
+  MIN_VERTICAL_SPEED,
+} from 'constants';
 
-interface SpeedGaugesProps {
-  horizontalSpeed: number;
-  verticalSpeed: number;
-}
+import { SpeedGaugesProps } from 'types';
+
+import { SpeedGauge } from './components/SpeedGauge';
 
 const SpeedGauges = ({ horizontalSpeed, verticalSpeed }: SpeedGaugesProps) => {
   return (
@@ -17,14 +21,14 @@ const SpeedGauges = ({ horizontalSpeed, verticalSpeed }: SpeedGaugesProps) => {
       <SpeedGauge
         label="Horizontal Speed"
         speed={horizontalSpeed}
-        minSpeed={-10}
-        maxSpeed={10}
+        minSpeed={MIN_HORIZONTAL_SPEED}
+        maxSpeed={MAX_HORIZONTAL_SPEED}
       />
       <SpeedGauge
         label="Vertical Speed"
         speed={verticalSpeed}
-        minSpeed={0}
-        maxSpeed={10}
+        minSpeed={MIN_VERTICAL_SPEED}
+        maxSpeed={MAX_VERTICAL_SPEED}
       />
     </div>
   );

@@ -1,53 +1,30 @@
-import { useEffect, useState } from 'react';
+import { Scoreboard } from '@components/Scoreboard';
 import {
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  Slider,
   CircularProgress,
-  Typography,
   Container,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Slider,
+  TextField,
+  Typography,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { useGameContext } from 'context/GameContext';
-import { toast } from 'react-toastify';
-import Scoreboard from '@components/Scoreboard/Scoreboard';
-import { getStoredScores, GameScore } from 'utils/localStorageUtils';
+
+import useHomePage from './hooks/useHomePage';
 
 const HomePage = () => {
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState('');
-  const [complexity, setComplexity] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const { initializeGame } = useGameContext();
-  const navigate = useNavigate();
-  const [scores, setScores] = useState<GameScore[]>([]);
-
-  const handleStartGame = async () => {
-    if (!name) {
-      toast.error('Please enter your name');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      await initializeGame(name, complexity);
-      setOpen(false);
-      navigate('/game');
-    } catch (error) {
-      console.error('Error initializing game:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    const storedScores = getStoredScores();
-    storedScores.sort((a, b) => b.score - a.score);
-    setScores(storedScores);
-  }, []);
+  const {
+    open,
+    setOpen,
+    name,
+    setName,
+    complexity,
+    setComplexity,
+    loading,
+    handleStartGame,
+    scores,
+  } = useHomePage();
 
   return (
     <Container maxWidth="md" style={{ marginTop: '50px' }}>

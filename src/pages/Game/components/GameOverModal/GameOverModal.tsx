@@ -1,30 +1,21 @@
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Typography,
 } from '@mui/material';
+import { GameOverModalProps } from 'types';
 
-interface GameOverModalProps {
-  gameStatus: 'won' | 'lost';
-  onRestart: () => void;
-  score: number;
-}
+import useGameOverModal from './hooks/useGameOverModal';
 
 const GameOverModal = ({
   gameStatus,
   onRestart,
   score,
 }: GameOverModalProps) => {
-  let message = '';
-
-  if (gameStatus === 'won') {
-    message = 'Congratulations! You won!';
-  } else {
-    message = 'The drone has been destroyed.';
-  }
+  const message = useGameOverModal(gameStatus);
 
   return (
     <Dialog open={true} onClose={onRestart}>

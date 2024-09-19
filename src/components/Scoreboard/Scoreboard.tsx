@@ -6,11 +6,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { GameScore } from 'utils/localStorageUtils';
-
-interface ScoreboardProps {
-  scores: GameScore[];
-}
+import { ScoreboardProps } from 'types';
 
 const Scoreboard = ({ scores }: ScoreboardProps) => {
   return (

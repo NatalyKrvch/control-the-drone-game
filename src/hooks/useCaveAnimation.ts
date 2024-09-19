@@ -1,18 +1,21 @@
-import { useState, useEffect } from 'react';
+import { GameStatus, VERTICAL_SPEED_MULTIPLIER } from 'constants';
+
+import { useEffect, useState } from 'react';
 
 export const useCaveAnimation = (
   verticalSpeed: number,
-  gameStatus: 'playing' | 'won' | 'lost',
+  gameStatus: GameStatus,
 ) => {
   const [caveOffset, setCaveOffset] = useState(0);
+  const isGameNotPlaying = gameStatus !== GameStatus.Playing;
 
   useEffect(() => {
-    if (gameStatus !== 'playing') return;
+    if (isGameNotPlaying) return;
 
     let animationFrameId: number;
 
     const animate = () => {
-      setCaveOffset((prev) => prev + verticalSpeed * 0.5);
+      setCaveOffset((prev) => prev + verticalSpeed * VERTICAL_SPEED_MULTIPLIER);
       animationFrameId = requestAnimationFrame(animate);
     };
 

@@ -1,54 +1,25 @@
-import Cave from '@components/Cave/Cave';
-import GameOverModal from '@components/GameOverModal/GameOverModal';
-import SpeedGauges from '@components/SpeedGauges/SpeedGauges';
-import { useGameContext } from 'context/GameContext';
-import { useDroneControls } from '@hooks/useDroneControls';
-import { useEffect, useState } from 'react';
-import { CircularProgress, Box, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { saveGameScore } from 'utils/localStorageUtils';
-import GameInstructions from '@components/GameInstructions/GameInstructions';
+import { GameStatus } from 'constants';
+
+import { Cave } from '@components/Cave';
+import { GameInstructions } from '@components/GameInstructions';
+import { SpeedGauges } from '@components/SpeedGauges';
+import { Box, CircularProgress, Typography } from '@mui/material';
+
+import { GameOverModal } from './components/GameOverModal';
+import useGamePage from './components/useGamePage';
 
 const GamePage = () => {
-  const { playerId, token, playerName, playerComplexity, caveData } =
-    useGameContext();
-  const navigate = useNavigate();
-  const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>(
-    'playing',
-  );
-  const [score, setScore] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const { dronePosition, horizontalSpeed, verticalSpeed } = useDroneControls(
-    250,
-    500,
+  const {
     gameStatus,
-  );
-
-  useEffect(() => {
-    if (!playerId || !token) {
-      navigate('/');
-    }
-  }, [playerId, token, navigate]);
-
-  useEffect(() => {
-    if (gameStatus === 'won') {
-      saveGameScore({
-        name: playerName,
-        complexity: playerComplexity,
-        score,
-      });
-    }
-  }, [gameStatus, playerName, playerComplexity, score]);
-
-  const segmentHeight = 10;
-  const viewHeight = 600;
-  const minSegments = Math.ceil(viewHeight / segmentHeight);
-
-  useEffect(() => {
-    if (caveData.length >= minSegments) {
-      setLoading(false);
-    }
-  }, [caveData, minSegments]);
+    setGameStatus,
+    score,
+    setScore,
+    loading,
+    dronePosition,
+    horizontalSpeed,
+    verticalSpeed,
+    navigate,
+  } = useGamePage();
 
   return (
     <Box
@@ -100,7 +71,7 @@ const GamePage = () => {
               score={score}
             />
           </Box>
-          {gameStatus !== 'playing' && (
+          {gameStatus !== GameStatus.Playing && (
             <GameOverModal
               gameStatus={gameStatus}
               onRestart={() => {

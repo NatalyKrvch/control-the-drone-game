@@ -1,10 +1,6 @@
-export interface GameScore {
-  name: string;
-  complexity: number;
-  score: number;
-}
+import { LOCAL_STORAGE_KEY } from 'constants';
 
-const LOCAL_STORAGE_KEY = 'gameScores';
+import { GameScore } from 'types';
 
 export const saveGameScore = (gameScore: GameScore) => {
   try {

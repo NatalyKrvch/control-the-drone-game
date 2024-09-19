@@ -1,21 +1,10 @@
-import { useCaveAnimation } from '@hooks/useCaveAnimation';
-import { useCollisionDetection } from '@hooks/useCollisionDetection';
-import React, { useRef } from 'react';
-import { createCavePath } from './helpers/createCavePath';
-import Drone from '@components/Drone/Drone';
-import { useUpdateScore } from '@hooks/useUpdateScore';
-import { useGameContext } from 'context/GameContext';
+import { MAX_FIELD_HEIGHT, MAX_FIELD_WIDTH } from 'constants';
 
-interface CaveProps {
-  dronePosition: number;
-  verticalSpeed: number;
-  setGameStatus: React.Dispatch<
-    React.SetStateAction<'playing' | 'won' | 'lost'>
-  >;
-  gameStatus: 'playing' | 'won' | 'lost';
-  setScore: React.Dispatch<React.SetStateAction<number>>;
-  score: number;
-}
+import { Drone } from '@components/Drone';
+import { CaveProps } from 'types';
+
+import { createCavePath } from './helpers/createCavePath';
+import useCave from './hooks/useCave';
 
 const Cave = ({
   dronePosition,
@@ -24,31 +13,20 @@ const Cave = ({
   gameStatus,
   setScore,
 }: CaveProps) => {
-  const { caveData, playerComplexity } = useGameContext();
-  const caveOffset = useCaveAnimation(verticalSpeed, gameStatus);
-  const caveRef = useRef<SVGSVGElement | null>(null);
-
-  useCollisionDetection({
+  const { caveRef, caveOffset, caveData } = useCave({
     dronePosition,
-    caveOffset,
-    gameStatus,
-    setGameStatus,
-    serverFinished: caveData.length === 0,
-  });
-
-  useUpdateScore({
-    caveOffset,
     verticalSpeed,
+    setGameStatus,
+    gameStatus,
     setScore,
-    playerComplexity,
   });
 
   return (
     <div>
       <svg
         ref={caveRef}
-        width="500"
-        height="600"
+        width={MAX_FIELD_WIDTH}
+        height={MAX_FIELD_HEIGHT}
         style={{ backgroundColor: 'gray' }}
       >
         <path

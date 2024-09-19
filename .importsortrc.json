@@ -1,0 +1,11 @@
+{
+  ".js, .jsx, .ts, .tsx": {
+    "style": "module",
+    "parser": "typescript",
+    "groups": [
+      ["^react$", "^@?\\w"],
+      ["^(@|components|utils|hooks|services|contexts)(/.*|$)"],
+      ["^[./]"]
+    ]
+  }
+}

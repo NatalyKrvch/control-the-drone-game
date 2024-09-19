@@ -1,25 +1,4 @@
-interface DroneRegion {
-  topY: number;
-  bottomY: number;
-  leftX: number;
-  rightX: number;
-}
-
-interface CalculateDroneRegionsParams {
-  droneX: number;
-  droneY: number;
-  droneWidth: number;
-  noseHeight: number;
-  backHeight: number;
-  sideWidth: number;
-}
-
-export interface DroneRegions {
-  nose: DroneRegion;
-  back: DroneRegion;
-  leftSide: DroneRegion;
-  rightSide: DroneRegion;
-}
+import { CalculateDroneRegionsParams, DroneRegion, DroneRegions } from 'types';
 
 export const calculateDroneRegions = ({
   droneX,
