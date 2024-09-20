@@ -9,13 +9,13 @@ To run this project on your local machine, follow these steps:
 1. **Clone the repository:**
 
 ```bash
-https://github.com/NatalyKrvch/verbose-octo-enigma.git
+https://github.com/NatalyKrvch/control-the-drone-game.git
 ```
 
 2. **Navigate to the project directory:**
 
 ```bash
-cd verbose-octo-enigma
+cd control-the-drone-game
 ```
 
 3. **Install dependencies:**
